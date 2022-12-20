@@ -1,30 +1,32 @@
-﻿/* CCF202104-1 灰度直方图 */
-#include <bits/stdc++.h>
-using namespace std;
+﻿/*
+CCF202104-1 灰度直方图
+
+得分: 100
+*/
+#include <bits/stdc++.h> // 一个包含C/C++中很多常用头文件的头文件
+using namespace std; // 默认命名空间：std
 
 const int L = 256;
 int cnt[L];
 
 int main()
 {
-    std::ios::sync_with_stdio(false);
-    cin.tie(NULL);
-    cout.tie(NULL);
+	int n, m, L;
+	vector<int> h;
 
-    memset(cnt, 0, sizeof cnt);
+	cin >> n >> m >> L;
+	h.resize(L, 0);
 
-    int n, m, l;
-    cin >> n >> m >> l;
-    for (int i = 1; i <= n; i++)
-        for (int j = 1; j <= m; j++) {
-            int x;
-            cin >> x;
-            cnt[x]++;
-        }
+	for (int i = 1; i <= n; i++) {
+		for (int j = 1; j <= m; j++) {
+			int x;
+			cin >> x;
+			h[x]++;
+		}
+	}
 
-    for (int i = 0; i < l; i++)
-        cout << cnt[i] << ' ';
-    cout << endl;
-
-    return 0;
+	for (int i = 0; i < L; i++) {
+		cout << h[i] << ' ';
+	}
+	return 0;
 }
