@@ -26,7 +26,7 @@ vector<vector<int>> cnt(M); // cnt[i]表示i的约数集合（不包括i本身�
 
 void init() { // 求约数集合（打表）
     for (int i = 1; i < M; i++) {
-        for (int j = 2 * i; j < M; j += i) { // O(M*logM)时间内打表，不要O(M^2)
+        for (int j = 2 * i; j < M; j += i) { // O(M^2)
             cnt[j].push_back(i);
         }
     }
