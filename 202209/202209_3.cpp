@@ -2,74 +2,65 @@
 CSP202209_3 防疫大数据
 得分：100
 */
-#include<iostream>
-#include<vector>
-#include<set>
-#include<algorithm>
-
+#include <bits/stdc++.h>
 using namespace std;
 
-typedef long long LL;
-set<LL> sd[1050], su;
 struct node {
-	LL d, u, r;
-}a;
-vector<node> v[1050];
-LL n, ri, mi, d, u, r, pi;
+	int d, u, r;
+};
 
 int main()
 {
+	int n, ri, mi, pi, d, u, r;
 	cin >> n; // 输入数据的天数
-	for (int i = 0; i < n; ++i)
+	vector<set<int>> locations(n + 7); // locations[i]表示第i天的风险地区集合，下面最多记录第n+6天的风险地区集合
+	vector<vector<node>> records(n); // records[i]表示第i天的记录
+	for (int i = 0; i < n; i++)
 	{
+		set<int> persons; // 第i日的疫情风险人名单
 		cin >> ri >> mi;
-		for (int j = 1; j <= ri; ++j)
+		for (int j = 1; j <= ri; j++)
 		{
 			cin >> pi;
-			for (int k = i; k < i + 7; ++k)
+			for (int k = i; k < i + 7; k++) // 最多记录第n+6天的风险地区集合
 			{
-				sd[k].insert(pi); // 表示从i天pi地区一直到i+7(不包括)时间内为风险地区
+				locations[k].insert(pi); // 表示pi从i天pi地区一直到i+7(不包括)时间内为风险地区
 			}
 		}
-		for (int j = 0; j < mi; ++j) // 输入漫游记录
+		for (int j = 0; j < mi; j++) // 输入漫游记录
 		{
 			cin >> d >> u >> r;
-			if (d < 0) {
+			if (d < 0) { // 没有负数天的风险地区记录，忽略
 				continue;
 			}
-			// if (!sd[d].count(r)) {
-			// 	continue; // 在d天查询有无风险地区，如果没有，说明u必定不是风险者，直接continue,count用来查询有无r
-			// }
-			a = { d,u,r };
-			v[i].push_back(a);
+			node a = { d,u,r };
+			records[i].push_back(a);
 		}
-		for (int j = max(0, i - 6); j <= i; ++j)
+		for (int j = max(0, i - 6); j <= i; j++) // 7天内
 		{
-			for (int k = 0; k < v[j].size(); ++k)
+			for (int k = 0; k < records[j].size(); k++) // 7天内的记录
 			{
-				d = v[j][k].d;
-				r = v[j][k].r;
-				u = v[j][k].u;
-
-				if (d < i - 6) {
+				d = records[j][k].d;
+				r = records[j][k].r;
+				u = records[j][k].u;
+				if (d < i - 6) { // 7天以前的走动数据忽略
 					continue;
 				}
 				bool flag = 1;
-				for (int day = d; day <= i; ++day) {
-					flag &= sd[day].count(r);
+				for (int day = d; day <= i; day++) {
+					flag *= locations[day].count(r);
 				}
-				if (flag) {
-					su.insert(u);
+				if (flag) { // 地区r自到访日至生成名单当日持续处于风险状态
+					persons.insert(u);
 				}
 			}
 		}
 		cout << i << " ";
-		for (set<LL>::iterator it = su.begin(); it != su.end(); ++it)
+		for (auto it = persons.begin(); it != persons.end(); it++)
 		{
 			cout << *it << " ";
 		}
 		cout << endl;
-		su.clear();
 	}
 	return 0;
 }

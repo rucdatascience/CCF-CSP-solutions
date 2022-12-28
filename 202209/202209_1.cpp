@@ -2,21 +2,21 @@
 CSP202209_1 如此编码
 得分：100
 */
-#include <iostream>
-#include <algorithm>
+#include <bits/stdc++.h>
 using namespace std;
-const int N = 30;
-int n, m;
-int a[N], b[N], c[N];//按照题目要求设置
+
 int main()
 {
+    int n, m;
     cin >> n >> m;
+    vector<int> a(n + 1), b(n + 1), c(n + 1);
     c[0] = 1;//初始化c[0]
     for (int i = 1; i <= n; i++)
     {
         cin >> a[i];
         c[i] = c[i - 1] * a[i];//根据定义求c[i]
     }
+
     for (int i = n; i >= 1; i--)
     {
         b[i] = m / c[i - 1];//b[i]为能选择的c[i-1]最大个数

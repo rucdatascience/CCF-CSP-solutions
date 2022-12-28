@@ -1,32 +1,40 @@
 ﻿/*
 CSP202209_2 何以包邮？
 得分：100
+
+本问题是0-1背包问题的反问题的一个特例：删去的cost不超过m-x的情况下（未删去的cost超过x），最大化删去的cost
 */
-# include <iostream>
-# include <algorithm>
-# define maxn 300010
+#include <bits/stdc++.h>
 using namespace std;
-int n, x;
-int v[40] = { 0 };
-int f[40][maxn] = { {0} };
+
 int main()
 {
+	int n, x;
 	cin >> n >> x;
-	int sum = 0;
+
+	vector<int> cost(n + 1);
+	int m = 0;
 	for (int i = 1; i <= n; i++) {
-		cin >> v[i];
-		sum += v[i];
+		cin >> cost[i];
+		m += cost[i];
 	}
-	int y = sum - x;
+
+	/*背包问题动态规划	*/
+	vector<vector<int>> f(n + 1);
+	int y = m - x; // 可删去的cost的上限
+	for (int i = 0; i < n + 1; i++) {
+		f[i].resize(y + 1, 0); // f[i][j]指在从a0到ai中删去的cost不超过j的情况下，最大的可删去的cost
+	}
 	for (int i = 1; i <= n; i++) {
 		for (int j = 1; j <= y; j++) {
-			f[i][j] = f[i - 1][j];//背包问题的核心公式
-			if (j >= v[i]) {
-				f[i][j] = max(f[i][j], f[i - 1][j - v[i]] + v[i]);//背包问题的核心公式
+			if (j >= cost[i]) {
+				f[i][j] = max(f[i - 1][j], f[i - 1][j - cost[i]] + cost[i]);//背包问题的核心公式
+			}
+			else {
+				f[i][j] = f[i - 1][j];//背包问题的核心公式
 			}
 		}
 	}
-	int r = sum - f[n][y];
-	cout << r << endl;
+	cout << m - f[n][y] << endl;
 	return 0;
 }
