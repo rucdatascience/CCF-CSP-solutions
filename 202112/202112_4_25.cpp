@@ -94,33 +94,33 @@ void write(int id, int l, int r, int x) {
             if (it == it_end) {
                 break; // 遍历完线段
             }
-            continue; 
+            continue;
         }
         if (it->id != 0 && it->id != id) {
             break; // 操作立刻中断
         }
 
-        if (it->l >= l && it->r <= r) {
-            it->value = x;
-            it->previous_id = it->id;
-            it->id = id;
-            write_right_bound = it->r;
-            if (it == it_end) {
-                break; // 遍历完线段
-            }
-            continue;
-        }
+        //if (it->l >= l && it->r <= r) {
+        //    it->value = x;
+        //    it->previous_id = it->id;
+        //    it->id = id;
+        //    write_right_bound = it->r;
+        //    if (it == it_end) {
+        //        break; // 遍历完线段
+        //    }
+        //    continue;
+        //}
 
         to_be_deleted.push_back(*it); // 该线段与[l,r]（部分）重叠
 
         /*write 重叠的部分 { max(it->l,l), min(it->r,r) } */
-        s.l = max(it->l, l);
-        s.r = min(it->r, r);
-        s.value = x;
-        s.id = id;
-        s.previous_id = it->id;
-        to_be_inserted.push_back(s); // 写在重叠的部分
-        write_right_bound = s.r;
+        //s.l = max(it->l, l);
+        //s.r = min(it->r, r);
+        //s.value = x;
+        //s.id = id;
+        //s.previous_id = it->id;
+        //to_be_inserted.push_back(s); // 写在重叠的部分
+        write_right_bound = min(it->r, r);
 
         /*维护不重叠部分*/
         if (it->l < l) {
@@ -144,6 +144,15 @@ void write(int id, int l, int r, int x) {
     }
     for (auto it = to_be_inserted.begin(); it != to_be_inserted.end(); it++) {
         segment_tree.insert(*it);
+    }
+
+    if (write_right_bound != -1) {
+        s.l = l;
+        s.r = write_right_bound;
+        s.id = id;
+        s.value = x;
+        s.previous_id = 0; // 此处无所谓
+        segment_tree.insert(s);
     }
 
     cout << write_right_bound << endl;
