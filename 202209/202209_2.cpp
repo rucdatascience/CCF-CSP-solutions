@@ -19,7 +19,7 @@ int main()
 		m += cost[i];
 	}
 
-	/*背包问题动态规划	*/
+	/*背包问题动态规划*/
 	vector<vector<int>> f(n + 1);
 	int y = m - x; // 可删去的cost的上限
 	for (int i = 0; i < n + 1; i++) {
