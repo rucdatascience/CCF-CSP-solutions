@@ -1,3 +1,8 @@
+/*
+CSP202209_4 吉祥物投票
+得分：100
+*/
+
 #include <bits/stdc++.h>
 
 #define fi first
