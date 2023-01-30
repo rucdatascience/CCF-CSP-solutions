@@ -1,3 +1,8 @@
+/*
+CSP202209_2 何以包邮？
+得分：100
+*/
+
 #include <bits/stdc++.h>
 
 #define fi first
