@@ -15,12 +15,7 @@ int main()
     {
         cin >> a[i];
         c[i] = c[i - 1] * a[i];//根据定义求c[i]
-    }
-
-    for (int i = n; i >= 1; i--)
-    {
-        b[i] = m / c[i - 1];//b[i]为能选择的c[i-1]最大个数
-        m -= b[i] * c[i - 1];
+        b[i] = (m % c[i] - m % c[i - 1]) / c[i - 1]; // m%c[0]=0;
     }
     for (int i = 1; i <= n; i++)
     {
