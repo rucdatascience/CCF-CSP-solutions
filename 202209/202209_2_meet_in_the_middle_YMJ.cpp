@@ -59,7 +59,7 @@ int main()
 		{
 			s += a[i+m];
 		}
-		auto tmp = lower_bound(sum, sum+(1<<m), x-s);
+		auto tmp = lower_bound(sum, sum+(1<<m), x-s); // lower_bound(ForwardIterator first, ForwardIterator last, const T& val) returns an iterator pointing to the first element in the range [first,last) which does not compare less than val
 		if(tmp != sum+(1<<m))
 		{
 			Min(ans, s + *tmp);
