@@ -20,7 +20,7 @@ item_aID[x]=代表作品x的aID。aID_item[i]=一个aID i所代表的作品。
 
 操作三：swap(item_aID[x], item_aID[y])
 
-如果不适用上述并查集方法会超时！
+如果不使用上述并查集方法会超时！
 */
 
 struct node1 { // 用来维护作品投票排序
