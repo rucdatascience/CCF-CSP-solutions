@@ -1,19 +1,23 @@
 ﻿/*
 CSP202109_3 脉冲神经网络
 得分：100
+
+http://www.manongjc.com/detail/32-jplehuuexcqszce.html
+
+https://blog.csdn.net/weixin_51275821/article/details/124170987
 */
 #include <bits/stdc++.h>
 using namespace std;
 
-const int N = 2010;
+const int maxN = 2010;
 const double INF = 1e8;
 
-int n, s, p, T;
+int N, S, P, T;
 double dt;
-int h[N], e[N], D[N], ne[N], idx;
-double W[N], v[N], u[N], a[N], b[N], c[N], d[N];
-int r[N], cnt[N];
-double I[1024][N / 2];
+int h[maxN], e[maxN], D[maxN], ne[maxN], idx = 0;
+double W[maxN], v[maxN], u[maxN], a[maxN], b[maxN], c[maxN], d[maxN];
+int r[maxN], cnt[maxN];
+double I[1024][maxN / 2];
 
 static unsigned long _next = 1;
 
@@ -23,59 +27,54 @@ int myrand(void) {
     return((unsigned)(_next / 65536) % 32768);
 }
 
-void add(int a, int b, double c, int d)
-{
-    e[idx] = b, W[idx] = c, D[idx] = d, ne[idx] = h[a], h[a] = idx++;
-}
-
 int main()
 {
     memset(h, -1, sizeof h);
-    scanf("%d%d%d%d", &n, &s, &p, &T);
-    scanf("%lf", &dt);
-    for (int i = 0; i < n;)
+
+    /*input*/
+    cin >> N >> S >> P >> T;
+    cin >> dt;
+    for (int i = 0; i < N;)
     {
         int rn;
-        scanf("%d", &rn);
+        cin >> rn;
         double vv, uu, aa, bb, cc, dd;
-        scanf("%lf%lf%lf%lf%lf%lf", &vv, &uu, &aa, &bb, &cc, &dd);
+        cin >> vv >> uu >> aa >> bb >> cc >> dd;
         for (int j = 0; j < rn; j++, i++)
         {
             v[i] = vv, u[i] = uu, a[i] = aa, b[i] = bb, c[i] = cc, d[i] = dd;
         }
     }
-
-    for (int i = n; i < n + p; i++) scanf("%d", &r[i]);
-
+    for (int i = N; i < N + P; i++) {
+        cin >> r[i];
+    }
     int mod = 0;
-    while (s--)
-    {
+    for (int i = 0; i < S; i++) {
         int a, b, d;
         double c;
-        scanf("%d%d%lf%d", &a, &b, &c, &d);
-        add(a, b, c, d);
+        cin >> a >> b >> c >> d;
+        e[idx] = b, W[idx] = c, D[idx] = d, ne[idx] = h[a], h[a] = idx++;
         mod = max(mod, d + 1);
     }
 
     for (int i = 0; i < T; i++)
     {
         int t = i % mod;
-        for (int j = n; j < n + p; j++)
+        for (int j = N; j < N + P; j++)
             if (r[j] > myrand())
             {
-                for (int k = h[j]; ~k; k = ne[k])
+                for (int k = h[j]; ~k; k = ne[k]) // ~是位运算的取反运算符
                 {
                     int x = e[k];
                     I[(t + D[k]) % mod][x] += W[k];
                 }
             }
 
-        for (int j = 0; j < n; j++)
+        for (int j = 0; j < N; j++)
         {
             double vv = v[j], uu = u[j];
             v[j] = vv + dt * (0.04 * vv * vv + 5 * vv + 140 - uu) + I[t][j];
             u[j] = uu + dt * a[j] * (b[j] * vv - uu);
-
             if (v[j] >= 30)
             {
                 for (int k = h[j]; ~k; k = ne[k])
@@ -94,7 +93,7 @@ int main()
     double minv = INF, maxv = -INF;
     int minc = INF, maxc = -INF;
 
-    for (int i = 0; i < n; i++)
+    for (int i = 0; i < N; i++)
     {
         minv = min(minv, v[i]);
         maxv = max(maxv, v[i]);
