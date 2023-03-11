@@ -1,8 +1,4 @@
-﻿/*
-CSP202209_1 如此编码
-得分：100
-*/
-#include <bits/stdc++.h>
+﻿#include <bits/stdc++.h>
 using namespace std;
 
 /*
