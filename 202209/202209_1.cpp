@@ -19,8 +19,12 @@ int main()
 
     for (int i = n; i >= 1; i--)
     {
-        b[i] = m / c[i - 1];//b[i]为能选择的c[i-1]最大个数
-        m -= b[i] * c[i - 1];
+        if (i == 1) {
+            b[i] = m % c[i];
+        }
+        else {
+            b[i] = (m % c[i] - m % c[i - 1]) / c[i - 1];
+        }
     }
     for (int i = 1; i <= n; i++)
     {
