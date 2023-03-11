@@ -15,6 +15,7 @@ int main()
     {
         cin >> a[i];
         c[i] = c[i - 1] * a[i];//根据定义求c[i]
+<<<<<<< HEAD
     }
 
     for (int i = n; i >= 1; i--)
@@ -25,6 +26,9 @@ int main()
         else {
             b[i] = (m % c[i] - m % c[i - 1]) / c[i - 1];
         }
+=======
+        b[i] = (m % c[i] - m % c[i - 1]) / c[i - 1]; // m%c[0]=0;
+>>>>>>> a05694dc998975071cc93e6037f2cd1fce2dd988
     }
     for (int i = 1; i <= n; i++)
     {
