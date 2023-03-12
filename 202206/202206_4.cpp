@@ -97,11 +97,11 @@ public:
 			if (it == psx.end()) return NULL_PD; // 不会遇到反射点
 			map<int, int>::iterator it2;
 			if (d == X_POS) {
-				it2 = it->second.upper_bound(p.x);
+				it2 = it->second.upper_bound(p.x); // upper_bound返回第一个大于p.x的元素
 				if (it2 == it->second.end()) return NULL_PD;
 			}
 			else {
-				it2 = it->second.lower_bound(p.x);
+				it2 = it->second.lower_bound(p.x); // lower_bound返回第一个大于等于p.x的元素
 				if (it2 == it->second.begin()) return NULL_PD;
 				--it2;//技巧：lower_bound的前一个就是第一个比p.x小的数
 			}
