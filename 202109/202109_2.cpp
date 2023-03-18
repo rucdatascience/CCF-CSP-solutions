@@ -38,8 +38,8 @@ int main()
 	int ans = 0, sum = 0;
 	for (i = 10001; i; i--)
 	{
-		sum += b[i];	 //前缀和可能为负 
-		ans = max(sum, ans);
+		sum += b[i]; // sum记录了p=i时的非零段数
+		ans = max(sum, ans); // ans记录最大的非零段数
 	}
 	cout << ans << endl;
 	return 0;
