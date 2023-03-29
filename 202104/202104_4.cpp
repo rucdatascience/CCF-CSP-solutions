@@ -52,7 +52,7 @@ int main() {
         */
         s.assign(M, 0); // 把s中的元素赋值为0
 
-        for (int j = i - 1; j >= 1; j--) { // 难度2：快速计算f[j,i]
+        for (int j = i - 1; j >= 1; j--) { // 难点2：快速计算f[j,i]
             int d = a[i] - a[j]; // 区间长度
             long long int num = 0; // f[j,i]； long long类型，不溢出
             for (int k : cnt[d]) { // 枚举d长度的每一个约数
