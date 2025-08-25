@@ -14,7 +14,7 @@ long long f[1000005][12];
 struct Matrix{
     ll** data;
     int n, m;
-    Matrix(int n, int m):n(n), m(m){
+    Matrix(int n, int m) : n(n), m(m){
         data = new ll * [n];
         for (int i = 0; i < n; i ++) {
             data[i] = new ll[m]();
@@ -62,7 +62,7 @@ struct Matrix{
                 res.data[i][6] += x * other.data[k][6];
                 res.data[i][7] += x * other.data[k][7];
                 res.data[i][8] += x * other.data[k][8];
-                res.data[i][9] += x* other.data[k][9];
+                res.data[i][9] += x * other.data[k][9];
                 res.data[i][10] += x * other.data[k][10];
             }
         }
@@ -81,17 +81,21 @@ struct Matrix{
         return I;
     }
 };
-Matrix matrix_pow (Matrix base, ll exp) {
+Matrix pow2[35] = {Matrix(11, 11), Matrix(11, 11), Matrix(11, 11), Matrix(11, 11), Matrix(11, 11), Matrix(11, 11), Matrix(11, 11),
+				   Matrix(11, 11), Matrix(11, 11), Matrix(11, 11), Matrix(11, 11), Matrix(11, 11), Matrix(11, 11), Matrix(11, 11),
+				   Matrix(11, 11), Matrix(11, 11), Matrix(11, 11), Matrix(11, 11), Matrix(11, 11), Matrix(11, 11), Matrix(11, 11),
+				   Matrix(11, 11), Matrix(11, 11), Matrix(11, 11), Matrix(11, 11), Matrix(11, 11), Matrix(11, 11), Matrix(11, 11),
+				   Matrix(11, 11), Matrix(11, 11), Matrix(11, 11), Matrix(11, 11), Matrix(11, 11), Matrix(11, 11), Matrix(11, 11)};
+inline void matrix_pow (Matrix base, ll exp, Matrix &result) {
     int size = base.n;
-    Matrix result = Matrix::identity(size);
+	int i = 1;
     while (exp > 0) {
         if (exp & 1) {
-            result = result * base;
+            result = result * pow2[i];
         }
-        base = base * base;
+        i ++;
         exp >>= 1;
     }
-    return result;
 }
 int main(){
 //	freopen("10.in", "r", stdin);
@@ -123,13 +127,16 @@ int main(){
 	Matrix Ans(1, 11);
 	Ans.data[0][0] = 1;
 	
-	for (int i = 1; i <= m; i ++) {
-		Ans = Ans * matrix_pow(M, a[i] - a[i - 1] - 1);
-//		Ans*=matrix_pow(M,a[i]-a[i-1]-1);
-		Ans = Ans * B;
-//		Ans*=B;
+	pow2[0] = Matrix::identity(11);
+	pow2[1] = M;
+	for (int i = 2; i <= 30; i++) {
+		pow2[i] = pow2[i - 1] * pow2[i - 1];
 	}
-	Ans = Ans * matrix_pow(M, n - a[m]);
+	for (int i = 1; i <= m; i ++) {
+		matrix_pow(M, a[i] - a[i - 1] - 1, Ans);
+		Ans = Ans * B;
+	}
+	matrix_pow(M, n - a[m], Ans);
 	printf("%lld", Ans.data[0][10]);
 	return 0;
 }
