@@ -6,7 +6,7 @@ unsigned long long num1, num2, tag;
 unsigned long long str_to_ll (string x) {
 	unsigned long long ret = 0;
 	for (int i = 0; i < x.length(); i ++) {
-		ret = (ret << 1) + (x[i] - '0');
+		ret = (ret * 2) + (x[i] - '0');
 	}
 	return ret;
 }
@@ -63,14 +63,16 @@ unsigned long long typical_to_oridinary(string s) {
 }
 map<unsigned long long, string> mp12, mp25;
 int main() {
-//	freopen("1.in", "r", stdin);
-//	freopen("1.out", "w", stdout);
+//	freopen("9.in", "r", stdin);
+//	freopen("9.out", "w", stdout);
+	ios::sync_with_stdio(0), cin.tie(0);
 	cin >> n;
 	while (n --) {
 		cin >> meg;
 		if (meg[0] == '0') {
 			meg1 = meg.substr(1, 28);
 			meg2 = meg.substr(29, 28);
+			// substr(x, y) 从x开始的y位 
 			meg3 = meg.substr(57, 15);
 			num1 = str_to_ll(meg1);
 			num2 = str_to_ll(meg2);
@@ -111,7 +113,7 @@ int main() {
 			meg1 = get_code(num1);
 			meg2 = (mp12.count(num2)) ? "#" + mp12[num2] : "###";
 			mp25[get_hash(num1, 25)] = mp12[get_hash(num1, 12)] = meg1;
-			if (!tag) swap(meg1, meg2); 
+			if (!tag) swap(meg1, meg2);
 			
 			cout << meg1 << " " << meg2 << endl;
 		}
@@ -119,6 +121,7 @@ int main() {
 	return 0;
 }
 /*
+
 7
 100111111001001101000001000100101001010001000000011011110000011100011010
 000000111011010010001111000110010000110101101010001111011000000001111011
@@ -127,4 +130,13 @@ int main() {
 100111111001001101000001000100101001010001000001001000111000011101101000
 100111111001001101000001000100101001010001000001110110000000011101101000
 100111111001001101000001000100101001010001000001110110000000011101101000
+
+### ABCD200_3
+#ABCD200_3 A0BCD 123
+#ABCD200_3 ABCD200_4
+PY4XMCHJZTN ###
+#PY4XMCHJZTN ABCD200_4
+#ABCD200_4 ABCD200_5
+#ABCD200_5 ABCD200_5
+
 */ 
